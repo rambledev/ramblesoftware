@@ -3,11 +3,12 @@ import { NextResponse } from 'next/server'
 
 export async function PATCH(
   req: Request,
-  { params }: { params: { id: string } }
+  { params }: { params: Promise<{ id: string }> }
 ) {
+  const { id } = await params
   const body = await req.json()
   const system = await prisma.system.update({
-    where: { id: params.id },
+    where: { id },
     data: body,
   })
   return NextResponse.json(system)
@@ -15,8 +16,9 @@ export async function PATCH(
 
 export async function DELETE(
   _: Request,
-  { params }: { params: { id: string } }
+  { params }: { params: Promise<{ id: string }> }
 ) {
-  await prisma.system.delete({ where: { id: params.id } })
+  const { id } = await params
+  await prisma.system.delete({ where: { id } })
   return NextResponse.json({ success: true })
 }
