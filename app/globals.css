@@ -9,6 +9,10 @@
   --gray-soft: #F8FAFC;
 }
 
+html {
+  scroll-behavior: smooth;
+}
+
 * {
   box-sizing: border-box;
 }
@@ -21,4 +25,29 @@ body {
 
 .font-display {
   font-family: var(--font-syne), sans-serif;
+}
+
+/* Gradient text — amber to orange */
+.text-gradient-gold {
+  background: linear-gradient(135deg, #FBBF24 0%, #F97316 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+/* Subtle dot grid overlay for dark sections */
+.dot-grid {
+  background-image: radial-gradient(rgba(255, 255, 255, 0.07) 1.5px, transparent 1.5px);
+  background-size: 26px 26px;
+}
+
+/* Pulsing ring animation for primary CTA */
+@keyframes pulse-ring {
+  0% { box-shadow: 0 0 0 0 rgba(251, 191, 36, 0.5); }
+  70% { box-shadow: 0 0 0 10px rgba(251, 191, 36, 0); }
+  100% { box-shadow: 0 0 0 0 rgba(251, 191, 36, 0); }
+}
+
+.cta-pulse {
+  animation: pulse-ring 2.5s ease-out infinite;
 }

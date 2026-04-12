@@ -2,7 +2,7 @@
 
 import { useCallback, useEffect, useState } from 'react'
 import Link from 'next/link'
-import { ArrowLeft, Plus } from 'lucide-react'
+import { ArrowLeft, Plus, CreditCard } from 'lucide-react'
 import AdminSystemList from '@/components/admin/AdminSystemList'
 import AddSystemModal from '@/components/admin/AddSystemModal'
 import type { System } from '@/types'
@@ -45,13 +45,22 @@ export default function AdminPage() {
               <span className="ml-2 text-sm font-normal text-slate-400">/ จัดการระบบ</span>
             </span>
           </div>
-          <button
-            onClick={() => setShowModal(true)}
-            className="inline-flex items-center gap-2 px-4 py-2 rounded-xl bg-[#1A56DB] text-white text-sm font-semibold hover:bg-[#0F2557] transition-colors shadow-sm"
-          >
-            <Plus size={16} />
-            เพิ่มระบบ
-          </button>
+          <div className="flex items-center gap-2">
+            <Link
+              href="/admin/payments"
+              className="inline-flex items-center gap-1.5 px-3 py-2 rounded-xl text-sm text-slate-500 hover:text-[#1A56DB] hover:bg-blue-50 transition-colors"
+            >
+              <CreditCard size={16} />
+              การชำระเงิน
+            </Link>
+            <button
+              onClick={() => setShowModal(true)}
+              className="inline-flex items-center gap-2 px-4 py-2 rounded-xl bg-[#1A56DB] text-white text-sm font-semibold hover:bg-[#0F2557] transition-colors shadow-sm"
+            >
+              <Plus size={16} />
+              เพิ่มระบบ
+            </button>
+          </div>
         </div>
       </header>
 

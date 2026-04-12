@@ -18,4 +18,98 @@ model System {
   order       Int      @default(0)
   createdAt   DateTime @default(now())
   updatedAt   DateTime @updatedAt
+
+  plans Plan[]
+}
+
+model User {
+  id          String   @id @default(cuid())
+  name        String?
+  lineId      String?
+  accessToken String   @unique
+  createdAt   DateTime @default(now())
+
+  subscriptions Subscription[]
+  orders        Order[]
+  payments      Payment[]
+}
+
+model Plan {
+  id           String  @id @default(cuid())
+  systemId     String?
+  name         String
+  price        Int
+  promoPrice   Int?
+  trialDays    Int     @default(7)
+  billingType  String  @default("monthly")
+  durationDays Int?
+  isActive     Boolean @default(true)
+
+  system        System?        @relation(fields: [systemId], references: [id])
+  subscriptions Subscription[]
+  orderItems    OrderItem[]
+}
+
+model Subscription {
+  id        String   @id @default(cuid())
+  userId    String
+  planId    String
+  status    String
+  startDate DateTime
+  endDate   DateTime
+
+  user   User    @relation(fields: [userId], references: [id])
+  plan   Plan    @relation(fields: [planId], references: [id])
+  orders Order[]
+}
+
+model Order {
+  id             String   @id @default(cuid())
+  userId         String
+  subscriptionId String?
+  status         String
+  totalAmount    Int
+  createdAt      DateTime @default(now())
+
+  user         User          @relation(fields: [userId], references: [id])
+  subscription Subscription? @relation(fields: [subscriptionId], references: [id])
+  items        OrderItem[]
+  payment      Payment?
+}
+
+model OrderItem {
+  id       String @id @default(cuid())
+  orderId  String
+  planId   String
+  quantity Int    @default(1)
+  price    Int
+
+  order Order @relation(fields: [orderId], references: [id])
+  plan  Plan  @relation(fields: [planId], references: [id])
+}
+
+model Payment {
+  id         String    @id @default(cuid())
+  orderId    String    @unique
+  userId     String
+  amount     Int
+  method     String
+  refCode    String    @unique
+  slipUrl    String?
+  status     String
+  verifiedBy String?
+  verifiedAt DateTime?
+  createdAt  DateTime  @default(now())
+
+  order Order @relation(fields: [orderId], references: [id])
+  user  User  @relation(fields: [userId], references: [id])
+}
+
+model AdminLog {
+  id        String   @id @default(cuid())
+  adminId   String
+  action    String
+  targetId  String
+  note      String?
+  createdAt DateTime @default(now())
 }
