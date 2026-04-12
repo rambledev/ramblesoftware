@@ -31,12 +31,7 @@ export default function Hero() {
         <span className="font-display text-xl font-bold text-white tracking-tight">
           Ramble<span className="text-gradient-gold">Software</span>
         </span>
-        <Link
-          href="/admin"
-          className="text-xs text-white/30 hover:text-white/60 transition-colors"
-        >
-          จัดการระบบ →
-        </Link>
+        
       </nav>
 
       {/* Hero content */}
